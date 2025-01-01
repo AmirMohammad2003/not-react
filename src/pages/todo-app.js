@@ -1,7 +1,7 @@
-import Component from "../../not-react/components/component.js";
-import Element from "../../not-react/components/element.js";
-import Fragment from "../../not-react/components/fragment.js";
-import Text from "../../not-react/components/text.js";
+import Component from "not-react/components/component.js";
+import Element from "not-react/components/element.js";
+import Fragment from "not-react/components/fragment.js";
+import Text from "not-react/components/text.js";
 
 export default class TodoApp extends Component {
   constructor() {

@@ -39,7 +39,6 @@ class Component {
 
   rerender() {
     this.doRerender = true;
-    console.log(this.cachedRender);
     if (this.cachedRender === undefined) {
       return;
     }
@@ -47,7 +46,6 @@ class Component {
       const ref = this.cachedRender[0];
       const old = this.cachedRender;
       this._insertBefore(this.render(), ref);
-      console.log(this.cachedRender);
       old.forEach((elem) => {
         elem.remove();
       });
@@ -71,7 +69,6 @@ class Component {
       this.cachedRender = this.cache.render();
       this.doRrender = false;
     }
-    // console.log(this.cachedRender);
     return this.cachedRender;
   }
 }

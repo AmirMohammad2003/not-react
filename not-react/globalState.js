@@ -10,40 +10,40 @@ const setElementTree = (newElementTree) => {
   elementTree = newElementTree;
 };
 
-let globalState = [];
-const getGlobalState = (name) => globalState[name].value;
-const setGlobalState = (name, value) => {
-  if (globalState[name] === undefined) {
-    globalState[name] = {
-      value: undefined,
-      subscribers: [],
+const state = {
+  href: window.location.href,
+};
+const subscribers = {};
+const globalState = {
+  get(key) {
+    return key ? state[key] : undefined;
+  },
+
+  set(key, newValue) {
+    if (state[key] !== newValue) {
+      state[key] = newValue;
+      this.notifySubscribers(key, newValue);
+    }
+  },
+
+  subscribe(key, callback) {
+    if (!subscribers[key]) {
+      subscribers[key] = [];
+    }
+    subscribers[key].push(callback);
+
+    return () => {
+      if (subscribers[key]) {
+        subscribers[key] = subscribers[key].filter((cb) => cb !== callback);
+      }
     };
-  } else if (globalState[name].value === value) {
-    return;
-  }
-  globalState[name].value = value;
-  console.log(name, "changed to", value);
-  globalState[name].subscribers.forEach((subscriber) => {
-    subscriber(value);
-  });
+  },
+
+  notifySubscribers(key, newValue) {
+    if (subscribers[key]) {
+      subscribers[key].forEach((callback) => callback(newValue));
+    }
+  },
 };
 
-globalState.subscribe = (name, callback) => {
-  if (globalState[name] === undefined) {
-    globalState[name] = {
-      value: undefined,
-      subscribers: [],
-    };
-  }
-  globalState[name].subscribers.push(callback);
-};
-
-export {
-  getRoot,
-  setRoot,
-  getElementTree,
-  setElementTree,
-  getGlobalState,
-  setGlobalState,
-  globalState,
-};
+export { getRoot, setRoot, getElementTree, setElementTree, globalState };
