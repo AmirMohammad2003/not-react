@@ -1,10 +1,7 @@
-import { render } from "./globalFunctions.js";
-import { setRoot } from "./globalState.js";
+import { render } from "../not-react/globalFunctions.js";
+import App from "./app.js";
 
-setRoot(document.getElementById("root"));
+const root = document.getElementById("root");
+const app = new App();
 
-window.onpopstate = function (e) {
-  render();
-};
-
-render();
+render(root, app);

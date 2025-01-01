@@ -1,20 +1,35 @@
-import { getRoot, setRoot } from "./globalState.js";
-import router from "./router/router.js";
-import Link from "./router/link.js";
-import page1 from "./pages/page1.js";
-import page2 from "./pages/page2.js";
-export default function app() {
-  const render = router({
-    "/about/": page1,
-    "/me/": page2,
-  });
-  if (render === undefined) {
-    const fr = document.createDocumentFragment();
-    fr.appendChild(Link({ href: "/about/", children: "About me" }));
-    fr.appendChild(document.createElement("br"));
-    fr.appendChild(Link({ href: "/me/", children: "Me" }));
-    return fr;
-  } else {
-    return render();
+import Component from "../not-react/components/component.js";
+import Fragment from "../not-react/components/fragment.js";
+import ELement from "../not-react/components/element.js";
+import Text from "../not-react/components/text.js";
+import Router from "../not-react/router/router.js";
+import Link from "../not-react/router/link.js";
+
+import AboutMe from "./pages/about-me.js";
+import TodoApp from "./pages/todo-app.js";
+
+export default class App extends Component {
+  constructor() {
+    super();
+  }
+  content() {
+    // This thing lacks state to avoid re-renders.
+    return new Router({
+      "/": Fragment({
+        children: [
+          Link({
+            href: "/about/",
+            children: [Text("About me")],
+          }),
+          ELement("br"),
+          Link({
+            href: "/todo-app/",
+            children: [Text("Go to todo app")],
+          }),
+        ],
+      }),
+      "/about/": new AboutMe(),
+      "/todo-app/": new TodoApp(),
+    });
   }
 }

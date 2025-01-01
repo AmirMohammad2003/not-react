@@ -1,0 +1,13 @@
+{
+  "name": "not-react",
+  "version": "1.0.0",
+  "description": "it is not react",
+  "license": "ISC",
+  "author": "Amir",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
+
