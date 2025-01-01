@@ -1,3 +1,4 @@
+import { renderNode } from "./utils.js";
 class Component {
   constructor(children = [], attributes = {}) {
     this.children = children;
@@ -66,7 +67,7 @@ class Component {
   render() {
     if (this.doRerender === true) {
       this.cache = this.content();
-      this.cachedRender = this.cache.render();
+      this.cachedRender = renderNode(this.cache);
       this.doRrender = false;
     }
     return this.cachedRender;

@@ -1,4 +1,5 @@
 import Node from "./node.js";
+import { renderNode } from "./utils.js";
 
 class FragmentNode extends Node {
   constructor(children = []) {
@@ -8,7 +9,8 @@ class FragmentNode extends Node {
   render() {
     let ret = [];
     this.children.forEach((child) => {
-      const rendered = child.render();
+      let rendered = renderNode(child);
+
       if (rendered instanceof Array) {
         rendered.forEach((elem) => {
           ret.push(elem);

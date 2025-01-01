@@ -1,24 +1,30 @@
+import { renderNode } from "./utils.js";
 export default class Node {
-  constructor(elem = undefined, children = []) {
+  constructor(elem = undefined, children = [], events = []) {
     this.elem = elem;
     this.children = children;
+    this.events = events;
+    console.log(elem);
+    console.table(events);
   }
 
-  appendChild(child) {
-    const renderd = child.render();
-    if (renderd instanceof Array) {
-      renderd.forEach((elem) => {
+  appendChild(rendered) {
+    if (rendered instanceof Array) {
+      rendered.forEach((elem) => {
         this.elem.appendChild(elem);
       });
     } else {
-      this.elem.appendChild(renderd);
+      this.elem.appendChild(rendered);
     }
   }
 
   render() {
+    this.events.forEach(({ name, callback }) => {
+      this.elem.addEventListener(name, callback);
+    });
     this.elem.innerHTML = "";
     this.children.forEach((child) => {
-      this.appendChild(child);
+      this.appendChild(renderNode(child));
     });
     return this.elem;
   }

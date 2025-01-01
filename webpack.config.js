@@ -28,12 +28,23 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.m?js$/,
+        test: /\.m?jsx?$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
           options: {
             presets: ["@babel/preset-env"],
+            plugins: [
+              [
+                "@babel/plugin-transform-react-jsx-development",
+                {
+                  throwIfNamespace: false,
+                  runtime: "classic",
+                  pragma: "notReact.createElement",
+                  pragmaFrag: "notReact.Fragment",
+                },
+              ],
+            ],
           },
         },
       },

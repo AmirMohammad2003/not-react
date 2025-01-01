@@ -1,7 +1,7 @@
 import ELement from "../components/element.js";
 import { globalState } from "../globalState.js";
 export default function Link({ href, children }) {
-  const handleClick = function (e) {
+  const handleClick = function(e) {
     e.preventDefault();
     const { href } = e.target;
     history.pushState({}, "", href);
@@ -10,7 +10,6 @@ export default function Link({ href, children }) {
 
   return ELement("a", {
     children,
-    attributes: { href },
-    events: { click: handleClick },
+    attributes: { href, onclick: handleClick },
   });
 }
