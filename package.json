@@ -18,6 +18,6 @@
     "webpack-dev-server": "^5.2.0"
   },
   "dependencies": {
-    "not-react": "./not-react"
+    "not-react": "file:not-react"
   }
 }

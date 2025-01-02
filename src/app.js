@@ -1,7 +1,6 @@
 import Component from "not-react/components/component.js";
 import Fragment from "not-react/components/fragment.js";
 import ELement from "not-react/components/element.js";
-import Text from "not-react/components/text.js";
 import Router from "not-react/router/router.js";
 import Link from "not-react/router/link.js";
 
@@ -19,12 +18,12 @@ export default class App extends Component {
         children: [
           Link({
             href: "/about/",
-            children: [Text("About me")],
+            children: ["About me"],
           }),
           ELement("br"),
           Link({
             href: "/todo-app/",
-            children: [Text("Go to todo app")],
+            children: ["Go to todo app"],
           }),
         ],
       }),
