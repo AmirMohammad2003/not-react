@@ -4,8 +4,10 @@ import Component from "not-react/components/component.js";
 import Todo from "./todo.jsx";
 
 export default class TodoApp extends Component {
-  constructor() {
-    super();
+  constructor(props = {}, children = []) {
+    super(props, children);
+    console.log("initialized")
+    console.log(this)
     this.createState("todos", []);
   }
   content() {

@@ -2,9 +2,9 @@ import Component from "../components/component.js";
 import { globalState } from "../globalState.js";
 
 class Router extends Component {
-  constructor(routes) {
-    super();
-    this.routes = routes;
+  constructor(props = {}, children = []) {
+    super(props, children);
+    this.routes = props.routes;
     globalState.subscribe("href", (href) => {
       this.rerender();
     });

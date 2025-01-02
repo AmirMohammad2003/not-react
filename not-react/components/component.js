@@ -1,9 +1,11 @@
 import { renderNode } from "./utils.js";
-class Component {
-  constructor(children = [], attributes = {}) {
-    this.children = children;
-    this.attributes = attributes;
+import Node from "./node.js";
+
+class Component extends Node {
+  constructor(props = {}, children = []) {
+    super(props, children);
     this.cache = undefined;
+    this.cachedRender = [];
     this.states = {};
     this.doRerender = true;
   }
@@ -27,7 +29,7 @@ class Component {
     this.rerender();
   }
 
-  _insertBefore(elem, before) {
+  insertBefore(elem, before) {
     const parent = before.parentElement;
     if (elem instanceof Array) {
       elem.forEach((el) => {
@@ -38,37 +40,52 @@ class Component {
     }
   }
 
-  rerender() {
-    this.doRerender = true;
+  _rerender() {
     if (this.cachedRender === undefined) {
       return;
     }
+    this.doRerender = true;
+
     if (this.cachedRender instanceof Array) {
       const ref = this.cachedRender[0];
       const old = this.cachedRender;
-      this._insertBefore(this.render(), ref);
+      this.insertBefore(this.render(), ref);
       old.forEach((elem) => {
         elem.remove();
       });
       return;
     }
     const ref = this.cachedRender;
+    console.log(ref);
     const rendered = this.render();
     if (rendered instanceof Array) {
-      ref.replaceWith(rendered[0]);
-      for (let i = 1; i < rendered.length; i++) {
-        rendered[i - 1].after(rendered[i]);
-      }
+      this.insertBefore(rendered, ref);
+      ref.remove();
       return;
     }
     ref.replaceWith(rendered);
+    console.log(this.cachedRender);
+  }
+  child_rerendered() {
+    console.log("I was called");
+    this.rerender();
+  }
+
+  _post_rerender() {
+    console.log(this.parent);
+    if (this.parent !== undefined) this.parent.child_rerendered();
+  }
+
+  rerender() {
+    this._rerender();
+    this._post_rerender();
   }
 
   render() {
     if (this.doRerender === true) {
       this.cache = this.content();
       this.cachedRender = renderNode(this.cache);
-      this.doRrender = false;
+      this.doRerender = false;
     }
     return this.cachedRender;
   }

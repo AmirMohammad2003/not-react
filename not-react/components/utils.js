@@ -5,7 +5,7 @@ export const renderNode = (node) => {
   if (typeof node === "string") {
     return document.createTextNode(node);
   }
-  if (typeof node == "object" && node.render) {
+  if (node && node.render) {
     return node.render();
   }
 

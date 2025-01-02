@@ -7,9 +7,9 @@ const notReact = {};
 
 notReact.createElement = (type, props, ...children) => {
   if (typeof type === "function") {
-    return new type({ children, attributes: props });
+    return new type(props, children);
   }
-  return Element(type, { children, attributes: props });
+  return new Element(type, props, children);
 };
 
 notReact.Fragment = ({ children }) => {
