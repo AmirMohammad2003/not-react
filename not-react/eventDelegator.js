@@ -18,7 +18,11 @@ export const globalEventHandler = function (event) {
   }
 };
 
-export const registerElementEvent = function (element, eventType, eventHandler) {
+export const registerElementEvent = function (
+  element,
+  eventType,
+  eventHandler,
+) {
   if (!eventRegistry.has(element)) {
     eventRegistry.set(element, {});
   }
@@ -28,7 +32,6 @@ export const registerElementEvent = function (element, eventType, eventHandler) 
 
   if (eventTypeUsage[eventType] === undefined) {
     eventTypeUsage[eventType] = 0;
-    console.log("Adding event listener", eventType);
     document.addEventListener(eventType, globalEventHandler);
   }
   eventTypeUsage[eventType]++;
@@ -37,7 +40,9 @@ export const registerElementEvent = function (element, eventType, eventHandler) 
 export const removeElementEvent = function (element, eventType, eventHandler) {
   const registeredEvents = eventRegistry.get(element);
   if (registeredEvents && registeredEvents[eventType]) {
-    registeredEvents[eventType] = registeredEvents[eventType].filter(h => h !== eventHandler);
+    registeredEvents[eventType] = registeredEvents[eventType].filter(
+      (h) => h !== eventHandler,
+    );
   }
 
   if (eventTypeUsage[eventType] !== undefined) {

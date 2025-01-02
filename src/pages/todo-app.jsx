@@ -14,7 +14,7 @@ export default class TodoApp extends Component {
         <h1>Todo App</h1>
         <input type="text" placeholder="Add todo" />
         <button
-          oncilck={(e) => {
+          onclick={(e) => {
             const value = e.target.previousElementSibling.value;
             this.setState("todos", (old) => old.push(value));
           }}
@@ -23,16 +23,19 @@ export default class TodoApp extends Component {
         </button>
         <ul>
           {this.states.todos.map((todo, index) => (
-            <Todo
-              todo={todo}
-              index={index}
-              onclick={(_) => {
-                this.setState("todos", (old) => old.splice(index, 1));
-              }}
-            />
+            new Todo({
+              attributes: {
+                todo,
+                index,
+                onclick: (_) => {
+                  this.setState("todos", (old) => old.splice(index, 1));
+                }
+              }
+            })
           ))}
         </ul>
       </div>
     );
   }
 }
+
