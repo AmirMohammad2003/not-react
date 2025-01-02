@@ -1,11 +1,10 @@
 import { renderNode } from "./utils.js";
+import { registerElementEvent } from "../eventDelegator.js";
+
 export default class Node {
-  constructor(elem = undefined, children = [], events = []) {
+  constructor(elem = undefined, children = []) {
     this.elem = elem;
     this.children = children;
-    this.events = events;
-    console.log(elem);
-    console.table(events);
   }
 
   appendChild(rendered) {
@@ -19,9 +18,6 @@ export default class Node {
   }
 
   render() {
-    this.events.forEach(({ name, callback }) => {
-      this.elem.addEventListener(name, callback);
-    });
     this.elem.innerHTML = "";
     this.children.forEach((child) => {
       this.appendChild(renderNode(child));

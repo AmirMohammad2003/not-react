@@ -4,10 +4,14 @@ import {
   setRoot,
   globalState,
 } from "./globalState.js";
+
+
 export const render = function (root, app) {
   window.onpopstate = function (_) {
     globalState.set("href", window.location.href);
   };
+
+
   setRoot(root);
   if (getElementTree() === undefined) {
     root.innerHTML = "";

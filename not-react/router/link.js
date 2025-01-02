@@ -1,15 +1,13 @@
 import ELement from "../components/element.js";
 import { globalState } from "../globalState.js";
-export default function Link({ href, children }) {
-  const handleClick = function(e) {
-    e.preventDefault();
-    const { href } = e.target;
-    history.pushState({}, "", href);
-    globalState.set("href", window.location.href);
-  };
 
+export default function Link({ href, children }) {
   return ELement("a", {
+    attributes: { href, onclick: (event) => {
+        event.preventDefault();
+        globalState.set("href", href);
+        window.history.pushState({}, "", href);
+      }, },
     children,
-    attributes: { href, onclick: handleClick },
   });
 }
