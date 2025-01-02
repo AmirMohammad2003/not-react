@@ -23,15 +23,13 @@ export default class TodoApp extends Component {
         </button>
         <ul>
           {this.states.todos.map((todo, index) => (
-            new Todo({
-              attributes: {
-                todo,
-                index,
-                onclick: (_) => {
-                  this.setState("todos", (old) => old.splice(index, 1));
-                }
-              }
-            })
+            <Todo
+              todo={todo}
+              index={index}
+              onclick={(_) => {
+                this.setState("todos", (old) => old.splice(index, 1));
+              }}
+            />
           ))}
         </ul>
       </div>

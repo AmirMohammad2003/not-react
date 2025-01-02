@@ -6,6 +6,9 @@ import Fragment from "./components/fragment.js";
 const notReact = {};
 
 notReact.createElement = (type, props, ...children) => {
+  if (typeof type === "function") {
+    return new type({ children, attributes: props });
+  }
   return Element(type, { children, attributes: props });
 };
 
